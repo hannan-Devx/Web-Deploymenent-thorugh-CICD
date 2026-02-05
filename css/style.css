@@ -334,20 +334,42 @@ body {
 }
 
 /* Jeans Images */
-.jeans-1 { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); }
-.jeans-2 { background: linear-gradient(135deg, #000000 0%, #434343 100%); }
-.jeans-3 { background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%); }
-.jeans-4 { background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%); }
-.jeans-5 { background: linear-gradient(135deg, #2c5364 0%, #203a43 100%); }
-.jeans-6 { background: linear-gradient(135deg, #0f2027 0%, #203a43 100%); }
+.jeans-1 {
+    background-image: url("../images/jeans1.jpg");
+}
+
+.jeans-2 {
+    background-image: url("../images/jeans2.jpg");
+}
+
+.jeans-3 {
+    background-image: url("../images/jeans3.jpg");
+}
+
+.jeans-4 {
+    background-image: url("../images/jeans4.jpg");
+}
+
+.jeans-5 {
+    background-image: url("../images/jeans5.jpg");
+}
+
+.jeans-6 {
+    background-image: url("../images/jeans6.jpg");
+}
+
 
 /* Shirt Images */
-.shirt-1 { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); }
-.shirt-2 { background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%); }
-.shirt-3 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-.shirt-4 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-.shirt-5 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
-.shirt-6 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+project/
+│
+├── images/
+│   ├── shirt1.jpg
+│   ├── shirt2.jpg
+│   ├── shirt3.jpg
+│   ├── shirt4.jpg
+│   ├── shirt5.jpg
+│   └── shirt6.jpg
+
 
 .product-info {
     padding: 1.5rem;
