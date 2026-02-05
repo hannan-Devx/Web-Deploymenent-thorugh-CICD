@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Jeans Collection - StyleHub</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <a href="index.html"><h1>StyleHub</h1></a>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="jeans.html" class="active">Jeans</a></li>
+                    <li><a href="shirts.html">Shirts</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                    <li><a href="cart.html" class="cart-link">🛒 Cart (<span id="cart-count">0</span>)</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <section class="products-header">
+        <div class="container">
+            <h1>Premium Jeans Collection</h1>
+            <p>Discover our exclusive range of premium denim</p>
+        </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="filters">
+        <div class="container">
+            <div class="filter-group">
+                <label>Sort By:</label>
+                <select id="sortFilter">
+                    <option value="default">Default</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="name">Name: A-Z</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="container">
+            <div class="products-grid" id="jeans-products">
+                <!-- Product 1 -->
+                <div class="product-card" data-product-id="jeans-1">
+                    <div class="product-image jeans-1"></div>
+                    <div class="product-info">
+                        <h3>Slim Fit Denim</h3>
+                        <p class="price">PKR 4,500</p>
+                        <p class="description">Classic blue slim fit jeans with stretch fabric for ultimate comfort</p>
+                        <div class="product-details">
+                            <span class="badge">In Stock</span>
+                            <span class="rating">⭐ 4.5 (120 reviews)</span>
+                        </div>
+                        <div class="size-selector">
+                            <label>Select Size:</label>
+                            <select class="size-select">
+                                <option value="28">28</option>
+                                <option value="30" selected>30</option>
+                                <option value="32">32</option>
+                                <option value="34">34</option>
+                                <option value="36">36</option>
+                            </select>
+                        </div>
+                        <button class="btn-cart" onclick="addToCart('jeans-1', 'Slim Fit Denim', 4500, this)">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card" data-product-id="jeans-2">
+                    <div class="product-image jeans-2"></div>
+                    <div class="product-info">
+                        <h3>Black Skinny Jeans</h3>
+                        <p class="price">PKR 5,200</p>
+                        <p class="description">Premium black skinny fit with comfort stretch technology</p>
+                        <div class="product-details">
+                            <span class="badge">In Stock</span>
+                            <span class="rating">⭐ 4.7 (95 reviews)</span>
+                        </div>
+                        <div class="size-selector">
+                            <label>Select Size:</label>
+                            <select class="size-select">
+                                <option value="28">28</option>
+                                <option value="30" selected>30</option>
+                                <option value="32">32</option>
+                                <option value="34">34</option>
+                                <option value="36">36</option>
+                            </select>
+                        </div>
+                        <button class="btn-cart" onclick="addToCart('jeans-2', 'Black Skinny Jeans', 5200, this)">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card" data-product-id="jeans-3">
+                    <div class="product-image jeans-3"></div>
+                    <div class="product-info">
+                        <h3>Relaxed Fit Jeans</h3>
+                        <p class="price">PKR 3,800</p>
+                        <p class="description">Comfortable relaxed fit for everyday casual wear</p>
+                        <div class="product-details">
+                            <span class="badge">In Stock</span>
+                            <span class="rating">⭐ 4.3 (78 reviews)</span>
+                        </div>
+                        <div class="size-selector">
+                            <label>Select Size:</label>
+                            <select class="size-select">
+                                <option value="28">28</option>
+                                <option value="30" selected>30</option>
+                                <option value="32">32</option>
+                                <option value="34">34</option>
+                                <option value="36">36</option>
+                            </select>
+                        </div>
+                        <button class="btn-cart" onclick="addToCart('jeans-3', 'Relaxed Fit Jeans', 3800, this)">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card" data-product-id="jeans-4">
+                    <div class="product-image jeans-4"></div>
+                    <div class="product-info">
+                        <h3>Distressed Denim</h3>
+                        <p class="price">PKR 6,000</p>
+                        <p class="description">Trendy distressed design with modern tapered cut</p>
+                        <div class="product-details">
+                            <span class="badge">In Stock</span>
+                            <span class="rating">⭐ 4.8 (150 reviews)</span>
+                        </div>
+                        <div class="size-selector">
+                            <label>Select Size:</label>
+                            <select class="size-select">
+                                <option value="28">28</option>
+                                <option value="30" selected>30</option>
+                                <option value="32">32</option>
+                                <option value="34">34</option>
+                                <option value="36">36</option>
+                            </select>
+                        </div>
+                        <button class="btn-cart" onclick="addToCart('jeans-4', 'Distressed Denim', 6000, this)">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card" data-product-id="jeans-5">
+                    <div class="product-image jeans-5"></div>
+                    <div class="product-info">
+                        <h3>Regular Fit Blue Jeans</h3>
+                        <p class="price">PKR 4,200</p>
+                        <p class="description">Classic regular fit in medium blue wash</p>
+                        <div class="product-details">
+                            <span class="badge">In Stock</span>
+                            <span class="rating">⭐ 4.4 (88 reviews)</span>
+                        </div>
+                        <div class="size-selector">
+                            <label>Select Size:</label>
+                            <select class="size-select">
+                                <option value="28">28</option>
+                                <option value="30" selected>30</option>
+                                <option value="32">32</option>
+                                <option value="34">34</option>
+                                <option value="36">36</option>
+                            </select>
+                        </div>
+                        <button class="btn-cart" onclick="addToCart('jeans-5', 'Regular Fit Blue Jeans', 4200, this)">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card" data-product-id="jeans-6">
+                    <div class="product-image jeans-6"></div>
+                    <div class="product-info">
+                        <h3>Dark Wash Straight Fit</h3>
+                        <p class="price">PKR 5,500</p>
+                        <p class="description">Premium dark wash with straight leg cut</p>
+                        <div class="product-details">
+                            <span class="badge">In Stock</span>
+                            <span class="rating">⭐ 4.6 (102 reviews)</span>
+                        </div>
+                        <div class="size-selector">
+                            <label>Select Size:</label>
+                            <select class="size-select">
+                                <option value="28">28</option>
+                                <option value="30" selected>30</option>
+                                <option value="32">32</option>
+                                <option value="34">34</option>
+                                <option value="36">36</option>
+                            </select>
+                        </div>
+                        <button class="btn-cart" onclick="addToCart('jeans-6', 'Dark Wash Straight Fit', 5500, this)">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>StyleHub</h3>
+                    <p>Premium Fashion Collection</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html#about">About Us</a></li>
+                        <li><a href="jeans.html">Jeans</a></li>
+                        <li><a href="shirts.html">Shirts</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: info@stylehub.com</p>
+                    <p>Phone: +92 300 1234567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 StyleHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/cart.js"></script>
+</body>
+</html>

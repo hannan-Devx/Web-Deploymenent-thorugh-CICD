@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casual Shirts Collection - StyleHub</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <a href="index.html"><h1>StyleHub</h1></a>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="jeans.html">Jeans</a></li>
+                    <li><a href="shirts.html" class="active">Shirts</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                    <li><a href="cart.html" class="cart-link">🛒 Cart (<span id="cart-count">0</span>)</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <section class="products-header">
+        <div class="container">
+            <h1>Casual Shirts Collection</h1>
+            <p>Explore our premium casual shirts for every occasion</p>
+        </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="filters">
+        <div class="container">
+            <div class="filter-group">
+                <label>Sort By:</label>
+                <select id="sortFilter">
+                    <option value="default">Default</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="name">Name: A-Z</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="container">
+            <div class="products-grid" id="shirts-products">
+                <!-- Product 1 -->
+                <div class="product-card" data-product-id="shirt-1">
+                    <div class="product-image shirt-1"></div>
+                    <div class="product-info">
+                        <h3>White Oxford Shirt</h3>
+                        <p class="price">PKR 3,200</p>
+                        <p class="description">Classic white oxford button-down shirt for formal occasions</p>
+                        <div class="product-details">
+                            <span class="badge">In Stock</span>
+                            <span class="rating">⭐ 4.6 (85 reviews)</span>
+                        </div>
+                        <div class="size-selector">
+                            <label>Select Size:</label>
+                            <select class="size-select">
+                                <option value="S">S</option>
+                                <option value="M" selected>M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                                <option value="XXL">XXL</option>
+                            </select>
+                        </div>
+                        <button class="btn-cart" onclick="addToCart('shirt-1', 'White Oxford Shirt', 3200, this)">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card" data-product-id="shirt-2">
+                    <div class="product-image shirt-2"></div>
+                    <div class="product-info">
+                        <h3>Blue Checked Shirt</h3>
+                        <p class="price">PKR 2,900</p>
+                        <p class="description">Casual checked shirt perfect for weekend style</p>
+                        <div class="product-details">
+                            <span class="badge">In Stock</span>
+                            <span class="rating">⭐ 4.4 (72 reviews)</span>
+                        </div>
+                        <div class="size-selector">
+                            <label>Select Size:</label>
+                            <select class="size-select">
+                                <option value="S">S</option>
+                                <option value="M" selected>M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                                <option value="XXL">XXL</option>
+                            </select>
+                        </div>
+                        <button class="btn-cart" onclick="addToCart('shirt-2', 'Blue Checked Shirt', 2900, this)">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card" data-product-id="shirt-3">
+                    <div class="product-image shirt-3"></div>
+                    <div class="product-info">
+                        <h3>Denim Shirt</h3>
+                        <p class="price">PKR 4,500</p>
+                        <p class="description">Premium denim shirt with modern slim fit</p>
+                        <div class="product-details">
+                            <span class="badge">In Stock</span>
+                            <span class="rating">⭐ 4.7 (98 reviews)</span>
+                        </div>
+                        <div class="size-selector">
+                            <label>Select Size:</label>
+                            <select class="size-select">
+                                <option value="S">S</option>
+                                <option value="M" selected>M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                                <option value="XXL">XXL</option>
+                            </select>
+                        </div>
+                        <button class="btn-cart" onclick="addToCart('shirt-3', 'Denim Shirt', 4500, this)">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card" data-product-id="shirt-4">
+                    <div class="product-image shirt-4"></div>
+                    <div class="product-info">
+                        <h3>Striped Casual Shirt</h3>
+                        <p class="price">PKR 3,500</p>
+                        <p class="description">Stylish striped casual shirt for smart casual look</p>
+                        <div class="product-details">
+                            <span class="badge">In Stock</span>
+                            <span class="rating">⭐ 4.5 (65 reviews)</span>
+                        </div>
+                        <div class="size-selector">
+                            <label>Select Size:</label>
+                            <select class="size-select">
+                                <option value="S">S</option>
+                                <option value="M" selected>M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                                <option value="XXL">XXL</option>
+                            </select>
+                        </div>
+                        <button class="btn-cart" onclick="addToCart('shirt-4', 'Striped Casual Shirt', 3500, this)">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card" data-product-id="shirt-5">
+                    <div class="product-image shirt-5"></div>
+                    <div class="product-info">
+                        <h3>Navy Linen Shirt</h3>
+                        <p class="price">PKR 4,800</p>
+                        <p class="description">Breathable linen shirt perfect for summer</p>
+                        <div class="product-details">
+                            <span class="badge">In Stock</span>
+                            <span class="rating">⭐ 4.8 (110 reviews)</span>
+                        </div>
+                        <div class="size-selector">
+                            <label>Select Size:</label>
+                            <select class="size-select">
+                                <option value="S">S</option>
+                                <option value="M" selected>M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                                <option value="XXL">XXL</option>
+                            </select>
+                        </div>
+                        <button class="btn-cart" onclick="addToCart('shirt-5', 'Navy Linen Shirt', 4800, this)">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card" data-product-id="shirt-6">
+                    <div class="product-image shirt-6"></div>
+                    <div class="product-info">
+                        <h3>Black Polo Shirt</h3>
+                        <p class="price">PKR 2,500</p>
+                        <p class="description">Classic black polo with comfortable fit</p>
+                        <div class="product-details">
+                            <span class="badge">In Stock</span>
+                            <span class="rating">⭐ 4.3 (58 reviews)</span>
+                        </div>
+                        <div class="size-selector">
+                            <label>Select Size:</label>
+                            <select class="size-select">
+                                <option value="S">S</option>
+                                <option value="M" selected>M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                                <option value="XXL">XXL</option>
+                            </select>
+                        </div>
+                        <button class="btn-cart" onclick="addToCart('shirt-6', 'Black Polo Shirt', 2500, this)">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>StyleHub</h3>
+                    <p>Premium Fashion Collection</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html#about">About Us</a></li>
+                        <li><a href="jeans.html">Jeans</a></li>
+                        <li><a href="shirts.html">Shirts</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: info@stylehub.com</p>
+                    <p>Phone: +92 300 1234567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 StyleHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/cart.js"></script>
+</body>
+</html>
