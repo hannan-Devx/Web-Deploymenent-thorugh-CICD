@@ -34,189 +34,27 @@
         </div>
     </section>
 
-    <!-- Filters -->
-    <section class="filters">
-        <div class="container">
-            <div class="filter-group">
-                <label>Sort By:</label>
-                <select id="sortFilter">
-                    <option value="default">Default</option>
-                    <option value="price-low">Price: Low to High</option>
-                    <option value="price-high">Price: High to Low</option>
-                    <option value="name">Name: A-Z</option>
-                </select>
-            </div>
-        </div>
-    </section>
+    <!-- Loading Indicator -->
+    <div id="loading" style="text-align: center; padding: 4rem;">
+        <div class="loader"></div>
+        <p style="margin-top: 1rem; color: #667eea; font-weight: 600;">Loading products from database...</p>
+    </div>
 
     <!-- Products Section -->
-    <section class="products-section">
+    <section class="products-section" id="products-section" style="display: none;">
         <div class="container">
             <div class="products-grid" id="jeans-products">
-                <!-- Product 1 -->
-                <div class="product-card" data-product-id="jeans-1">
-                    <div class="product-image jeans-1"></div>
-                    <div class="product-info">
-                        <h3>Slim Fit Denim</h3>
-                        <p class="price">PKR 4,500</p>
-                        <p class="description">Classic blue slim fit jeans with stretch fabric for ultimate comfort</p>
-                        <div class="product-details">
-                            <span class="badge">In Stock</span>
-                            <span class="rating">⭐ 4.5 (120 reviews)</span>
-                        </div>
-                        <div class="size-selector">
-                            <label>Select Size:</label>
-                            <select class="size-select">
-                                <option value="28">28</option>
-                                <option value="30" selected>30</option>
-                                <option value="32">32</option>
-                                <option value="34">34</option>
-                                <option value="36">36</option>
-                            </select>
-                        </div>
-                        <button class="btn-cart" onclick="addToCart('jeans-1', 'Slim Fit Denim', 4500, this)">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Product 2 -->
-                <div class="product-card" data-product-id="jeans-2">
-                    <div class="product-image jeans-2"></div>
-                    <div class="product-info">
-                        <h3>Black Skinny Jeans</h3>
-                        <p class="price">PKR 5,200</p>
-                        <p class="description">Premium black skinny fit with comfort stretch technology</p>
-                        <div class="product-details">
-                            <span class="badge">In Stock</span>
-                            <span class="rating">⭐ 4.7 (95 reviews)</span>
-                        </div>
-                        <div class="size-selector">
-                            <label>Select Size:</label>
-                            <select class="size-select">
-                                <option value="28">28</option>
-                                <option value="30" selected>30</option>
-                                <option value="32">32</option>
-                                <option value="34">34</option>
-                                <option value="36">36</option>
-                            </select>
-                        </div>
-                        <button class="btn-cart" onclick="addToCart('jeans-2', 'Black Skinny Jeans', 5200, this)">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Product 3 -->
-                <div class="product-card" data-product-id="jeans-3">
-                    <div class="product-image jeans-3"></div>
-                    <div class="product-info">
-                        <h3>Relaxed Fit Jeans</h3>
-                        <p class="price">PKR 3,800</p>
-                        <p class="description">Comfortable relaxed fit for everyday casual wear</p>
-                        <div class="product-details">
-                            <span class="badge">In Stock</span>
-                            <span class="rating">⭐ 4.3 (78 reviews)</span>
-                        </div>
-                        <div class="size-selector">
-                            <label>Select Size:</label>
-                            <select class="size-select">
-                                <option value="28">28</option>
-                                <option value="30" selected>30</option>
-                                <option value="32">32</option>
-                                <option value="34">34</option>
-                                <option value="36">36</option>
-                            </select>
-                        </div>
-                        <button class="btn-cart" onclick="addToCart('jeans-3', 'Relaxed Fit Jeans', 3800, this)">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Product 4 -->
-                <div class="product-card" data-product-id="jeans-4">
-                    <div class="product-image jeans-4"></div>
-                    <div class="product-info">
-                        <h3>Distressed Denim</h3>
-                        <p class="price">PKR 6,000</p>
-                        <p class="description">Trendy distressed design with modern tapered cut</p>
-                        <div class="product-details">
-                            <span class="badge">In Stock</span>
-                            <span class="rating">⭐ 4.8 (150 reviews)</span>
-                        </div>
-                        <div class="size-selector">
-                            <label>Select Size:</label>
-                            <select class="size-select">
-                                <option value="28">28</option>
-                                <option value="30" selected>30</option>
-                                <option value="32">32</option>
-                                <option value="34">34</option>
-                                <option value="36">36</option>
-                            </select>
-                        </div>
-                        <button class="btn-cart" onclick="addToCart('jeans-4', 'Distressed Denim', 6000, this)">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Product 5 -->
-                <div class="product-card" data-product-id="jeans-5">
-                    <div class="product-image jeans-5"></div>
-                    <div class="product-info">
-                        <h3>Regular Fit Blue Jeans</h3>
-                        <p class="price">PKR 4,200</p>
-                        <p class="description">Classic regular fit in medium blue wash</p>
-                        <div class="product-details">
-                            <span class="badge">In Stock</span>
-                            <span class="rating">⭐ 4.4 (88 reviews)</span>
-                        </div>
-                        <div class="size-selector">
-                            <label>Select Size:</label>
-                            <select class="size-select">
-                                <option value="28">28</option>
-                                <option value="30" selected>30</option>
-                                <option value="32">32</option>
-                                <option value="34">34</option>
-                                <option value="36">36</option>
-                            </select>
-                        </div>
-                        <button class="btn-cart" onclick="addToCart('jeans-5', 'Regular Fit Blue Jeans', 4200, this)">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Product 6 -->
-                <div class="product-card" data-product-id="jeans-6">
-                    <div class="product-image jeans-6"></div>
-                    <div class="product-info">
-                        <h3>Dark Wash Straight Fit</h3>
-                        <p class="price">PKR 5,500</p>
-                        <p class="description">Premium dark wash with straight leg cut</p>
-                        <div class="product-details">
-                            <span class="badge">In Stock</span>
-                            <span class="rating">⭐ 4.6 (102 reviews)</span>
-                        </div>
-                        <div class="size-selector">
-                            <label>Select Size:</label>
-                            <select class="size-select">
-                                <option value="28">28</option>
-                                <option value="30" selected>30</option>
-                                <option value="32">32</option>
-                                <option value="34">34</option>
-                                <option value="36">36</option>
-                            </select>
-                        </div>
-                        <button class="btn-cart" onclick="addToCart('jeans-6', 'Dark Wash Straight Fit', 5500, this)">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
+                <!-- Products loaded from API -->
             </div>
         </div>
     </section>
+
+    <!-- Error Message -->
+    <div id="error-message" style="display: none; text-align: center; padding: 4rem;">
+        <h2 style="color: #f44336;">⚠️ Error Loading Products</h2>
+        <p id="error-text" style="color: #666; margin: 1rem 0;"></p>
+        <button onclick="loadProducts()" class="btn-primary">🔄 Retry</button>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -232,7 +70,6 @@
                         <li><a href="index.html#about">About Us</a></li>
                         <li><a href="jeans.html">Jeans</a></li>
                         <li><a href="shirts.html">Shirts</a></li>
-                        <li><a href="index.html#contact">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
@@ -242,11 +79,108 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 StyleHub. All rights reserved.</p>
+                <p>&copy; 2025 StyleHub. Powered by AWS Lambda + DynamoDB</p>
             </div>
         </div>
     </footer>
 
+    <!-- Scripts - Order matters! -->
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
     <script src="js/cart.js"></script>
+    
+    <script>
+        // Load products on page load
+        document.addEventListener('DOMContentLoaded', loadProducts);
+        
+        async function loadProducts() {
+            const loading = document.getElementById('loading');
+            const productsSection = document.getElementById('products-section');
+            const errorMessage = document.getElementById('error-message');
+            const productsGrid = document.getElementById('jeans-products');
+            
+            try {
+                // Show loading
+                loading.style.display = 'block';
+                productsSection.style.display = 'none';
+                errorMessage.style.display = 'none';
+                
+                console.log('Fetching jeans products from API...');
+                
+                // Fetch jeans from backend API
+                const response = await apiService.getProductsByCategory('jeans');
+                
+                if (!response.success) {
+                    throw new Error(response.message || 'Failed to load products');
+                }
+                
+                const products = response.data;
+                console.log(`✓ Loaded ${products.length} products from API`);
+                
+                // Generate product cards
+                productsGrid.innerHTML = products.map(product => `
+                    <div class="product-card" data-product-id="${product.productId}">
+                        <div class="product-image ${product.imageClass}"></div>
+                        <div class="product-info">
+                            <h3>${product.name}</h3>
+                            <p class="price">PKR ${product.price.toLocaleString()}</p>
+                            <p class="description">${product.description}</p>
+                            <div class="product-details">
+                                <span class="badge ${product.inStock ? '' : 'out-of-stock'}">
+                                    ${product.inStock ? 'In Stock' : 'Out of Stock'}
+                                </span>
+                                <span class="rating">⭐ ${product.rating} (${product.reviews})</span>
+                            </div>
+                            <div class="size-selector">
+                                <label>Select Size:</label>
+                                <select class="size-select">
+                                    ${product.sizes.map(size => `
+                                        <option value="${size}" ${size === '30' ? 'selected' : ''}>${size}</option>
+                                    `).join('')}
+                                </select>
+                            </div>
+                            <button class="btn-cart" 
+                                    onclick="addToCart('${product.productId}', '${product.name}', ${product.price}, this)"
+                                    ${!product.inStock ? 'disabled' : ''}>
+                                ${product.inStock ? 'Add to Cart' : 'Out of Stock'}
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+                
+                // Show products
+                loading.style.display = 'none';
+                productsSection.style.display = 'block';
+                
+            } catch (error) {
+                console.error('Error loading products:', error);
+                loading.style.display = 'none';
+                errorMessage.style.display = 'block';
+                document.getElementById('error-text').textContent = 
+                    error.message + ' (Check browser console for details)';
+            }
+        }
+    </script>
+    
+    <style>
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .badge.out-of-stock {
+            background: #f44336;
+        }
+    </style>
 </body>
 </html>
