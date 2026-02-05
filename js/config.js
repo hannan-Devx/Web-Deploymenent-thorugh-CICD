@@ -1,7 +1,7 @@
 // API Configuration
 // Replace YOUR_API_ID with actual API Gateway ID
 const API_CONFIG = {
-    baseUrl: 'https://6kt98ddutd.execute-api.ap-south-1.amazonaws.com/prodhttps://6kt98ddutd.execute-api.ap-south-1.amazonaws.com/prod/products',
+    baseUrl: 'https://6kt98ddutd.execute-api.ap-south-1.amazonaws.com/prodhttps://6kt98ddutd.execute-api.ap-south-1.amazonaws.com/prod',
     endpoints: {
         products: '/products',
         orders: '/orders'  // For future use
