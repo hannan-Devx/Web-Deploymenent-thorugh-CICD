@@ -84,44 +84,42 @@
         </div>
     </footer>
 
-    <!-- Scripts - Order matters! -->
+    <!-- Scripts -->
     <script src="js/config.js"></script>
     <script src="js/api.js"></script>
     <script src="js/cart.js"></script>
-    
+
     <script>
         // Load products on page load
         document.addEventListener('DOMContentLoaded', loadProducts);
-        
+
         async function loadProducts() {
             const loading = document.getElementById('loading');
             const productsSection = document.getElementById('products-section');
             const errorMessage = document.getElementById('error-message');
             const productsGrid = document.getElementById('jeans-products');
-            
+
             try {
                 // Show loading
                 loading.style.display = 'block';
                 productsSection.style.display = 'none';
                 errorMessage.style.display = 'none';
-                
+
                 console.log('Fetching jeans products from API...');
-                
-                // Fetch jeans from backend API
+
+                // Fetch products from API
                 const response = await apiService.getProductsByCategory('jeans');
                 console.log("RAW API RESPONSE 👉", response);
-                // API direct array return kar rahi hai
-                const product = Array.isArray(response)
-                ? response
-                : (response.data || []);
 
-if (products.length === 0) {
-    throw new Error('No products found');
-}
-                
-                const products = response.data;
+                // Handle API response (array or { data: [...] })
+                const products = Array.isArray(response) ? response : (response.data || []);
+
+                if (products.length === 0) {
+                    throw new Error('No products found');
+                }
+
                 console.log(`✓ Loaded ${products.length} products from API`);
-                
+
                 // Generate product cards
                 productsGrid.innerHTML = products.map(product => `
                     <div class="product-card" data-product-id="${product.productId}">
@@ -152,11 +150,11 @@ if (products.length === 0) {
                         </div>
                     </div>
                 `).join('');
-                
+
                 // Show products
                 loading.style.display = 'none';
                 productsSection.style.display = 'block';
-                
+
             } catch (error) {
                 console.error('Error loading products:', error);
                 loading.style.display = 'none';
@@ -166,7 +164,7 @@ if (products.length === 0) {
             }
         }
     </script>
-    
+
     <style>
         .loader {
             border: 5px solid #f3f3f3;
@@ -182,7 +180,7 @@ if (products.length === 0) {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
+
         .badge.out-of-stock {
             background: #f44336;
         }
