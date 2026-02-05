@@ -59,9 +59,7 @@ jobs:
           
           echo "✅ Files uploaded successfully!"
       
-      
-      
-           # Step 7: Invalidate CloudFront cache (optional)
+      # Step 6: Invalidate CloudFront cache (optional)
       - name: Invalidate CloudFront Cache
         env:
           CF_DIST_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
@@ -74,16 +72,17 @@ jobs:
           echo "✅ CloudFront cache invalidated!"
         continue-on-error: true
 
-
-      
-            # Step 8: Verify uploaded files
+      # Step 7: Verify uploaded files (FIXED)
       - name: Verify Deployment
         run: |
           echo "🔍 Verifying uploaded files..."
-          aws s3 ls s3://${{ secrets.AWS_S3_BUCKET }}/ --recursive --region ${{ env.AWS_REGION }}
-          --recursive --human-readable --summarize
+          aws s3 ls s3://${{ secrets.AWS_S3_BUCKET }}/ \
+            --recursive \
+            --human-readable \
+            --summarize \
+            --region ${{ env.AWS_REGION }}
       
-      # Step 9: Deployment summary
+      # Step 8: Deployment summary
       - name: Deployment Complete
         run: |
           echo "============================================="
