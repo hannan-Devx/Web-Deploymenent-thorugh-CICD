@@ -110,10 +110,14 @@
                 // Fetch jeans from backend API
                 const response = await apiService.getProductsByCategory('jeans');
                 console.log("RAW API RESPONSE 👉", response);
-                
-                if (!response.success) {
-                    throw new Error(response.message || 'Failed to load products');
-                }
+                // API direct array return kar rahi hai
+                const product = Array.isArray(response)
+                ? response
+                : (response.data || []);
+
+if (products.length === 0) {
+    throw new Error('No products found');
+}
                 
                 const products = response.data;
                 console.log(`✓ Loaded ${products.length} products from API`);
