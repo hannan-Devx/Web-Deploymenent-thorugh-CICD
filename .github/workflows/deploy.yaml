@@ -1,0 +1,105 @@
+name: Deploy StyleHub to AWS S3
+
+# Trigger on push to main branch
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  AWS_REGION: ap-south-1
+
+jobs:
+  deploy:
+    name: Deploy Frontend to S3
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Step 1: Checkout repository
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      
+      # Step 2: Configure AWS credentials
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+      
+      # Step 3: Verify AWS connection
+      - name: Verify AWS Connection
+        run: |
+          echo "🔍 Testing AWS connection..."
+          aws sts get-caller-identity
+          echo "✅ AWS connection successful!"
+      
+      # Step 4: List S3 buckets (verification)
+      - name: List S3 Buckets
+        run: |
+          echo "📦 Available S3 buckets in region ${{ env.AWS_REGION }}:"
+          aws s3 ls --region ${{ env.AWS_REGION }}
+      
+      # Step 5: Sync files to S3
+      - name: Deploy to S3
+        run: |
+          echo "🚀 Deploying files to S3 bucket: ${{ secrets.AWS_S3_BUCKET }}"
+          
+          aws s3 sync . s3://${{ secrets.AWS_S3_BUCKET }} \
+            --region ${{ env.AWS_REGION }} \
+            --exclude ".git/*" \
+            --exclude ".github/*" \
+            --exclude "README.md" \
+            --exclude ".gitignore" \
+            --exclude "node_modules/*" \
+            --exclude "*.sh" \
+            --delete \
+            --no-progress
+          
+          echo "✅ Files uploaded successfully!"
+      
+      
+      
+           # Step 7: Invalidate CloudFront cache (optional)
+      - name: Invalidate CloudFront Cache
+        env:
+          CF_DIST_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+        if: env.CF_DIST_ID != ''
+        run: |
+          echo "🔄 Invalidating CloudFront cache..."
+          aws cloudfront create-invalidation \
+            --distribution-id "$CF_DIST_ID" \
+            --paths "/*"
+          echo "✅ CloudFront cache invalidated!"
+        continue-on-error: true
+
+
+      
+            # Step 8: Verify uploaded files
+      - name: Verify Deployment
+        run: |
+          echo "🔍 Verifying uploaded files..."
+          aws s3 ls s3://${{ secrets.AWS_S3_BUCKET }}/ --recursive --region ${{ env.AWS_REGION }}
+          --recursive --human-readable --summarize
+      
+      # Step 9: Deployment summary
+      - name: Deployment Complete
+        run: |
+          echo "============================================="
+          echo "✅ Deployment completed successfully!"
+          echo "============================================="
+          echo ""
+          echo "📊 Deployment Details:"
+          echo "  - Region: ${{ env.AWS_REGION }}"
+          echo "  - Bucket: ${{ secrets.AWS_S3_BUCKET }}"
+          echo "  - Branch: ${{ github.ref_name }}"
+          echo "  - Commit: ${{ github.sha }}"
+          echo ""
+          echo "🌐 Website URLs:"
+          echo "  - S3: http://${{ secrets.AWS_S3_BUCKET }}.s3-website.${{ env.AWS_REGION }}.amazonaws.com"
+          if [ -n "${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}" ]; then
+            echo "  - CloudFront: https://YOUR_CLOUDFRONT_URL (check AWS Console)"
+          fi
+          echo ""
+          echo "============================================="
