@@ -84,50 +84,14 @@
         </div>
     </footer>
 
-    <!-- All JavaScript inline to avoid loading issues -->
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/cart.js"></script>
+    
     <script>
-        // Cart functionality
-        let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+        document.addEventListener('DOMContentLoaded', loadProducts);
         
-        function updateCartCount() {
-            const count = cartItems.reduce((total, item) => total + (item.quantity || 1), 0);
-            const countElement = document.getElementById('cart-count');
-            if (countElement) {
-                countElement.textContent = count;
-            }
-        }
-        
-        function addToCart(productId, name, price, button) {
-            const productCard = button.closest('.product-card');
-            const sizeSelect = productCard ? productCard.querySelector('.size-select') : null;
-            const size = sizeSelect ? sizeSelect.value : 'M';
-            
-            cartItems.push({
-                productId,
-                name,
-                price,
-                size,
-                quantity: 1
-            });
-            
-            localStorage.setItem('cart', JSON.stringify(cartItems));
-            updateCartCount();
-            
-            // Visual feedback
-            button.textContent = '✓ Added!';
-            button.disabled = true;
-            setTimeout(() => {
-                button.textContent = 'Add to Cart';
-                button.disabled = false;
-            }, 1500);
-        }
-        
-        // Initialize cart count on page load
-        document.addEventListener('DOMContentLoaded', updateCartCount);
-    </script>
-
-    <script>
-        // Main products loading function
         async function loadProducts() {
             const loading = document.getElementById('loading');
             const productsSection = document.getElementById('products-section');
@@ -139,65 +103,47 @@
                 productsSection.style.display = 'none';
                 errorMessage.style.display = 'none';
                 
-                console.log('Fetching shirts from API...');
+                console.log('Fetching shirts products from API...');
                 
-                // Direct API call - no dependencies
-                const response = await fetch(
-                    'https://6kt98ddutd.execute-api.ap-south-1.amazonaws.com/prod/products?category=shirts'
-                );
+                // Fetch shirts from backend API
+                const response = await apiService.getProductsByCategory('shirts');
                 
-                console.log('Response status:', response.status);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                if (!response.success) {
+                    throw new Error(response.message || 'Failed to load products');
                 }
                 
-                const result = await response.json();
-                console.log('API Response:', result);
+                const products = response.data;
+                console.log(`✓ Loaded ${products.length} products from API`);
                 
-                // Check if we got valid data
-                if (!result.success || !result.data) {
-                    throw new Error('Invalid API response format');
-                }
-                
-                // Filter for shirts only (in case API returns all)
-                const shirts = result.data.filter(product => product.category === 'shirts');
-                console.log(`Found ${shirts.length} shirts:`, shirts);
-                
-                if (shirts.length === 0) {
-                    productsGrid.innerHTML = '<p class="no-products">No shirts available at the moment</p>';
-                } else {
-                    // Render products
-                    productsGrid.innerHTML = shirts.map(product => `
-                        <div class="product-card" data-product-id="${product.productId}">
-                            <div class="product-image ${product.imageClass}"></div>
-                            <div class="product-info">
-                                <h3>${product.name}</h3>
-                                <p class="price">PKR ${product.price.toLocaleString()}</p>
-                                <p class="description">${product.description}</p>
-                                <div class="product-details">
-                                    <span class="badge ${product.inStock ? '' : 'out-of-stock'}">
-                                        ${product.inStock ? 'In Stock' : 'Out of Stock'}
-                                    </span>
-                                    <span class="rating">⭐ ${product.rating} (${product.reviews})</span>
-                                </div>
-                                <div class="size-selector">
-                                    <label>Select Size:</label>
-                                    <select class="size-select">
-                                        ${product.sizes.map(size => `
-                                            <option value="${size}" ${size === 'M' ? 'selected' : ''}>${size}</option>
-                                        `).join('')}
-                                    </select>
-                                </div>
-                                <button class="btn-cart" 
-                                        onclick="addToCart('${product.productId}', '${product.name}', ${product.price}, this)"
-                                        ${!product.inStock ? 'disabled' : ''}>
-                                    ${product.inStock ? 'Add to Cart' : 'Out of Stock'}
-                                </button>
+                productsGrid.innerHTML = products.map(product => `
+                    <div class="product-card" data-product-id="${product.productId}">
+                        <div class="product-image ${product.imageClass}"></div>
+                        <div class="product-info">
+                            <h3>${product.name}</h3>
+                            <p class="price">PKR ${product.price.toLocaleString()}</p>
+                            <p class="description">${product.description}</p>
+                            <div class="product-details">
+                                <span class="badge ${product.inStock ? '' : 'out-of-stock'}">
+                                    ${product.inStock ? 'In Stock' : 'Out of Stock'}
+                                </span>
+                                <span class="rating">⭐ ${product.rating} (${product.reviews})</span>
                             </div>
+                            <div class="size-selector">
+                                <label>Select Size:</label>
+                                <select class="size-select">
+                                    ${product.sizes.map(size => `
+                                        <option value="${size}" ${size === 'M' ? 'selected' : ''}>${size}</option>
+                                    `).join('')}
+                                </select>
+                            </div>
+                            <button class="btn-cart" 
+                                    onclick="addToCart('${product.productId}', '${product.name}', ${product.price}, this)"
+                                    ${!product.inStock ? 'disabled' : ''}>
+                                ${product.inStock ? 'Add to Cart' : 'Out of Stock'}
+                            </button>
                         </div>
-                    `).join('');
-                }
+                    </div>
+                `).join('');
                 
                 loading.style.display = 'none';
                 productsSection.style.display = 'block';
@@ -207,12 +153,9 @@
                 loading.style.display = 'none';
                 errorMessage.style.display = 'block';
                 document.getElementById('error-text').textContent = 
-                    'Failed to load products: ' + error.message;
+                    error.message + ' (Check browser console for details)';
             }
         }
-        
-        // Start loading when page loads
-        document.addEventListener('DOMContentLoaded', loadProducts);
     </script>
     
     <style>
@@ -233,14 +176,6 @@
         
         .badge.out-of-stock {
             background: #f44336;
-        }
-        
-        .no-products {
-            text-align: center;
-            padding: 3rem;
-            font-size: 1.2rem;
-            color: #666;
-            grid-column: 1 / -1;
         }
     </style>
 </body>
