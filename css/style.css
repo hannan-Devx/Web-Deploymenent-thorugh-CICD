@@ -360,15 +360,30 @@ body {
 
 
 /* Shirt Images */
-project/
-│
-├── images/
-│   ├── shirt1.jpg
-│   ├── shirt2.jpg
-│   ├── shirt3.jpg
-│   ├── shirt4.jpg
-│   ├── shirt5.jpg
-│   └── shirt6.jpg
+.shirt-1 {
+    background-image: url("../images/shirt1.jpg");
+}
+
+.shirt-2 {
+    background-image: url("../images/shirt2.jpg");
+}
+
+.shirt-3 {
+    background-image: url("../images/shirt3.jpg");
+}
+
+.shirt-4 {
+    background-image: url("../images/shirt4.jpg");
+}
+
+.shirt-5 {
+    background-image: url("../images/shirt5.jpg");
+}
+
+.shirt-6 {
+    background-image: url("../images/shirt6.jpg");
+}
+
 
 
 .product-info {

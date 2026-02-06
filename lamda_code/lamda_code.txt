@@ -1,0 +1,109 @@
+// Lambda Function: Get Products - FINAL FIX
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { DynamoDBDocumentClient, ScanCommand, GetCommand } from "@aws-sdk/lib-dynamodb";
+
+const client = new DynamoDBClient({ region: "ap-south-1" });
+const dynamodb = DynamoDBDocumentClient.from(client);
+const TABLE_NAME = "StyleHub-Products";
+
+export const handler = async (event) => {
+    console.log('Event received:', JSON.stringify(event, null, 2));
+    
+    // CORS headers
+    const headers = {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type'
+    };
+    
+    try {
+        // Handle OPTIONS request (CORS preflight)
+        if (event.httpMethod === 'OPTIONS') {
+            return {
+                statusCode: 200,
+                headers: headers,
+                body: JSON.stringify({ message: 'OK' })
+            };
+        }
+        
+        // Extract query parameters - handle both direct and API Gateway formats
+        let queryParams = event.queryStringParameters || {};
+        const category = queryParams.category;
+        const productId = queryParams.productId;
+        
+        console.log('Extracted params - category:', category, 'productId:', productId);
+        
+        // Get single product by ID
+        if (productId) {
+            const params = {
+                TableName: TABLE_NAME,
+                Key: { productId: productId }
+            };
+            
+            console.log('Fetching single product:', productId);
+            const result = await dynamodb.send(new GetCommand(params));
+            
+            if (!result.Item) {
+                console.log('Product not found:', productId);
+                return createResponse(404, {
+                    success: false,
+                    message: 'Product not found',
+                    count: 0,
+                    data: []
+                }, headers);
+            }
+            
+            console.log('Product found:', result.Item.name);
+            return createResponse(200, {
+                success: true,
+                count: 1,
+                data: [result.Item]
+            }, headers);
+        }
+        
+        // Get all products or filter by category
+        const scanParams = { TableName: TABLE_NAME };
+        
+        if (category) {
+            scanParams.FilterExpression = 'category = :category';
+            scanParams.ExpressionAttributeValues = { ':category': category };
+            console.log('Scanning with category filter:', category);
+        } else {
+            console.log('Scanning all products');
+        }
+        
+        const result = await dynamodb.send(new ScanCommand(scanParams));
+        const items = result.Items || [];
+        
+        console.log('Scan complete. Items found:', items.length);
+        
+        return createResponse(200, {
+            success: true,
+            count: items.length,
+            data: items
+        }, headers);
+        
+    } catch (error) {
+        console.error('Lambda error:', error);
+        
+        return createResponse(500, {
+            success: false,
+            message: 'Internal server error: ' + error.message,
+            count: 0,
+            data: []
+        }, headers);
+    }
+};
+
+// Helper function to create consistent response
+function createResponse(statusCode, body, headers) {
+    const response = {
+        statusCode: statusCode,
+        headers: headers,
+        body: JSON.stringify(body)
+    };
+    
+    console.log('Returning response:', JSON.stringify(response));
+    return response;
+}
