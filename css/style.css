@@ -82,11 +82,24 @@ body {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 100px 0;
-    text-align: center;
+    position: relative;
+    background-image: url("../images/bg.jpg");
+    background-size: cover;
+    background-position: center;
 }
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45); /* dark overlay */
+}
+
+.hero * {
+    position: relative;
+    z-index: 1;
+}
+
 
 .hero-content h2 {
     font-size: 3rem;
