@@ -1,4 +1,4 @@
-// API Configuration
+// API Configuration for ap-south-1 (Mumbai)
 const API_CONFIG = {
     baseUrl: 'https://6kt98ddutd.execute-api.ap-south-1.amazonaws.com/prod',
     endpoints: {
@@ -7,3 +7,7 @@ const API_CONFIG = {
     }
 };
 
+// Debug logging
+console.log('🔧 API Config Loaded:');
+console.log('Base URL:', API_CONFIG.baseUrl);
+console.log('Products endpoint:', API_CONFIG.baseUrl + API_CONFIG.endpoints.products);

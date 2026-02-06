@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Header -->
     <header>
         <nav class="navbar">
             <div class="container">
@@ -26,7 +25,6 @@
         </nav>
     </header>
 
-    <!-- Page Header -->
     <section class="products-header">
         <div class="container">
             <h1>Premium Jeans Collection</h1>
@@ -34,29 +32,23 @@
         </div>
     </section>
 
-    <!-- Loading Indicator -->
     <div id="loading" style="text-align: center; padding: 4rem;">
         <div class="loader"></div>
         <p style="margin-top: 1rem; color: #667eea; font-weight: 600;">Loading products from database...</p>
     </div>
 
-    <!-- Products Section -->
     <section class="products-section" id="products-section" style="display: none;">
         <div class="container">
-            <div class="products-grid" id="jeans-products">
-                <!-- Products loaded from API -->
-            </div>
+            <div class="products-grid" id="jeans-products"></div>
         </div>
     </section>
 
-    <!-- Error Message -->
     <div id="error-message" style="display: none; text-align: center; padding: 4rem;">
         <h2 style="color: #f44336;">⚠️ Error Loading Products</h2>
         <p id="error-text" style="color: #666; margin: 1rem 0;"></p>
         <button onclick="loadProducts()" class="btn-primary">🔄 Retry</button>
     </div>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -84,13 +76,11 @@
         </div>
     </footer>
 
-    <!-- Scripts - Order matters! -->
     <script src="js/config.js"></script>
     <script src="js/api.js"></script>
     <script src="js/cart.js"></script>
     
     <script>
-        // Load products on page load
         document.addEventListener('DOMContentLoaded', loadProducts);
         
         async function loadProducts() {
@@ -100,55 +90,87 @@
             const productsGrid = document.getElementById('jeans-products');
             
             try {
-                // Show loading
                 loading.style.display = 'block';
                 productsSection.style.display = 'none';
                 errorMessage.style.display = 'none';
                 
                 console.log('Fetching jeans products from API...');
                 
-                // Fetch jeans from backend API
+                // Fetch from API
                 const response = await apiService.getProductsByCategory('jeans');
                 
-                if (!response.success) {
-                    throw new Error(response.message || 'Failed to load products');
+                console.log('API Response:', response);
+                
+                // Validate response
+                if (!response) {
+                    throw new Error('No response from API');
                 }
                 
-                const products = response.data;
+                if (!response.success) {
+                    throw new Error(response.message || 'API returned error');
+                }
+                
+                // CRITICAL: Ensure data is an array
+                let products = response.data;
+                
+                if (!products) {
+                    throw new Error('No data field in response');
+                }
+                
+                if (!Array.isArray(products)) {
+                    console.error('Data is not an array:', products);
+                    throw new Error('Invalid data format from API');
+                }
+                
                 console.log(`✓ Loaded ${products.length} products from API`);
                 
-                // Generate product cards
-                productsGrid.innerHTML = products.map(product => `
-                    <div class="product-card" data-product-id="${product.productId}">
-                        <div class="product-image ${product.imageClass}"></div>
-                        <div class="product-info">
-                            <h3>${product.name}</h3>
-                            <p class="price">PKR ${product.price.toLocaleString()}</p>
-                            <p class="description">${product.description}</p>
-                            <div class="product-details">
-                                <span class="badge ${product.inStock ? '' : 'out-of-stock'}">
-                                    ${product.inStock ? 'In Stock' : 'Out of Stock'}
-                                </span>
-                                <span class="rating">⭐ ${product.rating} (${product.reviews})</span>
-                            </div>
-                            <div class="size-selector">
-                                <label>Select Size:</label>
-                                <select class="size-select">
-                                    ${product.sizes.map(size => `
-                                        <option value="${size}" ${size === '30' ? 'selected' : ''}>${size}</option>
-                                    `).join('')}
-                                </select>
-                            </div>
-                            <button class="btn-cart" 
-                                    onclick="addToCart('${product.productId}', '${product.name}', ${product.price}, this)"
-                                    ${!product.inStock ? 'disabled' : ''}>
-                                ${product.inStock ? 'Add to Cart' : 'Out of Stock'}
-                            </button>
-                        </div>
-                    </div>
-                `).join('');
+                if (products.length === 0) {
+                    errorMessage.style.display = 'block';
+                    loading.style.display = 'none';
+                    document.getElementById('error-text').textContent = 
+                        'No jeans products found. Please add products to DynamoDB.';
+                    return;
+                }
                 
-                // Show products
+                // Generate product cards
+                productsGrid.innerHTML = products.map(product => {
+                    // Validate product object
+                    if (!product.productId || !product.name || !product.price) {
+                        console.warn('Invalid product:', product);
+                        return '';
+                    }
+                    
+                    return `
+                        <div class="product-card" data-product-id="${product.productId}">
+                            <div class="product-image ${product.imageClass || 'jeans-1'}"></div>
+                            <div class="product-info">
+                                <h3>${product.name}</h3>
+                                <p class="price">PKR ${product.price.toLocaleString()}</p>
+                                <p class="description">${product.description || ''}</p>
+                                <div class="product-details">
+                                    <span class="badge ${product.inStock ? '' : 'out-of-stock'}">
+                                        ${product.inStock ? 'In Stock' : 'Out of Stock'}
+                                    </span>
+                                    <span class="rating">⭐ ${product.rating || 4.5} (${product.reviews || 0})</span>
+                                </div>
+                                <div class="size-selector">
+                                    <label>Select Size:</label>
+                                    <select class="size-select">
+                                        ${(product.sizes || ['30']).map(size => `
+                                            <option value="${size}" ${size === '30' ? 'selected' : ''}>${size}</option>
+                                        `).join('')}
+                                    </select>
+                                </div>
+                                <button class="btn-cart" 
+                                        onclick="addToCart('${product.productId}', '${product.name}', ${product.price}, this)"
+                                        ${!product.inStock ? 'disabled' : ''}>
+                                    ${product.inStock ? 'Add to Cart' : 'Out of Stock'}
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
                 loading.style.display = 'none';
                 productsSection.style.display = 'block';
                 
@@ -156,8 +178,17 @@
                 console.error('Error loading products:', error);
                 loading.style.display = 'none';
                 errorMessage.style.display = 'block';
-                document.getElementById('error-text').textContent = 
-                    error.message + ' (Check browser console for details)';
+                
+                let errorText = error.message;
+                
+                // User-friendly error messages
+                if (error.message.includes('Failed to fetch')) {
+                    errorText = 'Cannot connect to API. Check CORS settings in API Gateway.';
+                } else if (error.message.includes('not a function')) {
+                    errorText = 'Invalid data format from API. Check Lambda function response.';
+                }
+                
+                document.getElementById('error-text').textContent = errorText;
             }
         }
     </script>
