@@ -90,73 +90,103 @@
     <script src="js/cart.js"></script>
     
     <script>
-        document.addEventListener('DOMContentLoaded', loadProducts);
+    document.addEventListener('DOMContentLoaded', loadProducts);
+    
+    async function loadProducts() {
+        const loading = document.getElementById('loading');
+        const productsSection = document.getElementById('products-section');
+        const errorMessage = document.getElementById('error-message');
+        const productsGrid = document.getElementById('shirts-products');
         
-        async function loadProducts() {
-            const loading = document.getElementById('loading');
-            const productsSection = document.getElementById('products-section');
-            const errorMessage = document.getElementById('error-message');
-            const productsGrid = document.getElementById('shirts-products');
+        try {
+            loading.style.display = 'block';
+            productsSection.style.display = 'none';
+            errorMessage.style.display = 'none';
             
-            try {
-                loading.style.display = 'block';
-                productsSection.style.display = 'none';
-                errorMessage.style.display = 'none';
-                
-                console.log('Fetching shirts products from API...');
-                
-                // Fetch shirts from backend API
-                const response = await apiService.getProductsByCategory('shirts');
-                
-                if (!response.success) {
-                    throw new Error(response.message || 'Failed to load products');
-                }
-                
-                const products = response.data;
-                console.log(`✓ Loaded ${products.length} products from API`);
-                
-                productsGrid.innerHTML = products.map(product => `
-                    <div class="product-card" data-product-id="${product.productId}">
-                        <div class="product-image ${product.imageClass}"></div>
-                        <div class="product-info">
-                            <h3>${product.name}</h3>
-                            <p class="price">PKR ${product.price.toLocaleString()}</p>
-                            <p class="description">${product.description}</p>
-                            <div class="product-details">
-                                <span class="badge ${product.inStock ? '' : 'out-of-stock'}">
-                                    ${product.inStock ? 'In Stock' : 'Out of Stock'}
-                                </span>
-                                <span class="rating">⭐ ${product.rating} (${product.reviews})</span>
-                            </div>
-                            <div class="size-selector">
-                                <label>Select Size:</label>
-                                <select class="size-select">
-                                    ${product.sizes.map(size => `
-                                        <option value="${size}" ${size === 'M' ? 'selected' : ''}>${size}</option>
-                                    `).join('')}
-                                </select>
-                            </div>
-                            <button class="btn-cart" 
-                                    onclick="addToCart('${product.productId}', '${product.name}', ${product.price}, this)"
-                                    ${!product.inStock ? 'disabled' : ''}>
-                                ${product.inStock ? 'Add to Cart' : 'Out of Stock'}
-                            </button>
-                        </div>
-                    </div>
-                `).join('');
-                
-                loading.style.display = 'none';
-                productsSection.style.display = 'block';
-                
-            } catch (error) {
-                console.error('Error loading products:', error);
-                loading.style.display = 'none';
-                errorMessage.style.display = 'block';
-                document.getElementById('error-text').textContent = 
-                    error.message + ' (Check browser console for details)';
+            console.log('=== DEBUG: Starting loadProducts ===');
+            
+            // Debug 1: Check if apiService exists
+            console.log('Debug 1 - apiService:', window.apiService);
+            console.log('Debug 2 - API_CONFIG:', window.API_CONFIG);
+            
+            if (!window.apiService) {
+                throw new Error('apiService is not defined. Check api.js loading.');
             }
+            
+            // Debug 2: Test the API call directly
+            console.log('Debug 3 - Testing direct fetch...');
+            const testUrl = 'https://6kt98ddutd.execute-api.ap-south-1.amazonaws.com/prod/products?category=shirts';
+            console.log('Debug 4 - URL:', testUrl);
+            
+            // Test direct fetch first
+            const testResponse = await fetch(testUrl);
+            console.log('Debug 5 - Test response status:', testResponse.status);
+            console.log('Debug 6 - Test response headers:', [...testResponse.headers.entries()]);
+            
+            const testData = await testResponse.json();
+            console.log('Debug 7 - Direct fetch result:', testData);
+            
+            // Now try with apiService
+            console.log('Debug 8 - Calling apiService.getProductsByCategory...');
+            const response = await apiService.getProductsByCategory('shirts');
+            console.log('Debug 9 - apiService response:', response);
+            
+            if (!response.success) {
+                throw new Error(response.message || 'Failed to load products');
+            }
+            
+            const products = response.data;
+            console.log('Debug 10 - Products data:', products);
+            console.log(`✓ Loaded ${products.length} products from API`);
+            
+            // ... rest of your rendering code ...
+            productsGrid.innerHTML = products.map(product => `
+                <div class="product-card" data-product-id="${product.productId}">
+                    <div class="product-image ${product.imageClass}"></div>
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <p class="price">PKR ${product.price.toLocaleString()}</p>
+                        <p class="description">${product.description}</p>
+                        <div class="product-details">
+                            <span class="badge ${product.inStock ? '' : 'out-of-stock'}">
+                                ${product.inStock ? 'In Stock' : 'Out of Stock'}
+                            </span>
+                            <span class="rating">⭐ ${product.rating} (${product.reviews})</span>
+                        </div>
+                        <div class="size-selector">
+                            <label>Select Size:</label>
+                            <select class="size-select">
+                                ${product.sizes.map(size => `
+                                    <option value="${size}" ${size === 'M' ? 'selected' : ''}>${size}</option>
+                                `).join('')}
+                            </select>
+                        </div>
+                        <button class="btn-cart" 
+                                onclick="addToCart('${product.productId}', '${product.name}', ${product.price}, this)"
+                                ${!product.inStock ? 'disabled' : ''}>
+                            ${product.inStock ? 'Add to Cart' : 'Out of Stock'}
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            
+            loading.style.display = 'none';
+            productsSection.style.display = 'block';
+            
+        } catch (error) {
+            console.error('=== DEBUG: ERROR DETAILS ===');
+            console.error('Error name:', error.name);
+            console.error('Error message:', error.message);
+            console.error('Error stack:', error.stack);
+            console.error('=== END DEBUG ===');
+            
+            loading.style.display = 'none';
+            errorMessage.style.display = 'block';
+            document.getElementById('error-text').textContent = 
+                error.message + ' (Check browser console for details)';
         }
-    </script>
+    }
+</script>
     
     <style>
         .loader {
