@@ -217,12 +217,19 @@ body {
 }
 
 .jeans-bg {
-    background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%);
+    background-image: url("../images/jeansbg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .shirts-bg {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    background-image: url("../images/shirtbg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
+
 
 .category-card h3 {
     padding: 1.5rem;
