@@ -23,16 +23,27 @@ class APIService {
         try {
             console.log(`Making ${method} request to: ${url}`);
             const response = await fetch(url, options);
-            const data = await response.json();
+            const result = await response.json();
             
             if (!response.ok) {
-                throw new Error(data.message || 'API request failed');
+                throw new Error(result.message || 'API request failed');
             }
             
-            return data;
+            // Return structured response
+            return {
+                success: result.success || true,
+                message: result.message || '',
+                data: result.data || result,
+                count: result.count || (Array.isArray(result.data) ? result.data.length : 0)
+            };
+            
         } catch (error) {
             console.error('API Error:', error);
-            throw error;
+            return {
+                success: false,
+                message: error.message,
+                data: []
+            };
         }
     }
     
