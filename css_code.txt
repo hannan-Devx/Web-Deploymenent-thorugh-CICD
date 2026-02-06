@@ -81,23 +81,52 @@ body {
 }
 
 /* Hero Section */
+/* Hero Section */
 .hero {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 100px 0;
+    position: relative;
+    min-height: calc(100vh - 80px); /* navbar ke baad full screen */
+    background-image: url("../images/bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     text-align: center;
+    color: white;
+}
+
+/* Dark overlay */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 0;
+}
+
+/* Hero content */
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    padding: 20px;
 }
 
 .hero-content h2 {
-    font-size: 3rem;
+    font-size: 3.2rem;
     margin-bottom: 1rem;
+    font-weight: 700;
 }
 
 .hero-content p {
     font-size: 1.3rem;
     margin-bottom: 2rem;
-    opacity: 0.9;
+    opacity: 0.95;
 }
+
 
 /* Buttons */
 .btn-primary, .btn-secondary, .btn-cart {
