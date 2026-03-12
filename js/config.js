@@ -1,14 +1,18 @@
 // API Configuration - EC2 Deployment
 const API_CONFIG = {
     // EC2 Public IP (Replace with your actual EC2 public IP)
-    baseUrl: 'http://YOUR_EC2_PUBLIC_IP',
-    // Example: 'http://13.232.123.45'
+    baseUrl: 'http://43.205.125.247',
+   
     
     endpoints: {
         products: '/products',
         orders: '/orders'
     }
 };
+
+console.log('🔧 API Config:');
+console.log('Backend:', API_CONFIG.baseUrl);
+console.log('Frontend:', 'CloudFront (HTTPS)');
 
 // Debug logging
 console.log('🔧 API Config Loaded (EC2 Deployment):');
