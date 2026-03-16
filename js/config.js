@@ -1,7 +1,7 @@
 // API Configuration - EC2 Deployment
 const API_CONFIG = {
     // EC2 Public IP (Replace with your actual EC2 public IP)
-    baseUrl: 'http://43.205.125.247',
+    baseUrl: 'https://stylehub.isroot.in/api',
    
     
     endpoints: {
